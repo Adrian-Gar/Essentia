@@ -1,2 +1,0 @@
-# Essentia
-Basic proyect HTML
