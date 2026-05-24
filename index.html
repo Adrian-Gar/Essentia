@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESSENTIA — Skincare Natural</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F9F8F4;
+    --fg: #2D3A31;
+    --primary: #8C9A84;
+    --secondary: #DCCFC2;
+    --border: #E6E2DA;
+    --terracotta: #C27B66;
+    --cream: #F2F0EB;
+    --white: #FFFFFF;
+    --shadow-sm: 0 4px 6px -1px rgba(45,58,49,0.05);
+    --shadow-md: 0 10px 15px -3px rgba(45,58,49,0.05);
+    --shadow-lg: 0 20px 40px -10px rgba(45,58,49,0.1);
+    --shadow-xl: 0 25px 50px -12px rgba(45,58,49,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── GRAIN OVERLAY ─── */
+  .grain {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(249,248,244,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--fg);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo span { font-style: italic; color: var(--primary); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--fg);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--terracotta); }
+
+  .nav-cta {
+    background: var(--fg);
+    color: var(--bg) !important;
+    padding: 0.5rem 1.4rem;
+    border-radius: 9999px;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.12em;
+    transition: background 0.3s ease, transform 0.2s ease !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--terracotta) !important;
+    color: var(--white) !important;
+    transform: translateY(-1px);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    padding: 8rem 2rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .hero-text { position: relative; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    padding: 0.35rem 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    display: inline-block;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    color: var(--fg);
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: #5a6b5e;
+    max-width: 440px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--fg);
+    color: var(--bg);
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 9999px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--terracotta);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 0.85rem 2rem;
+    border-radius: 9999px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  /* ─── HERO IMAGE SIDE ─── */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hero-img-wrap {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 3/4;
+    border-radius: 200px 200px 40px 40px;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    background: linear-gradient(160deg, #c8d5c0 0%, #a8b89e 40%, #8fa885 100%);
+    transition: transform 0.7s ease;
+  }
+
+  .hero-img-wrap:hover { transform: scale(1.02); }
+
+  .hero-img-decoration {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Illustrated soap bottle using CSS */
+  .soap-bottle {
+    position: relative;
+    width: 120px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .soap-pump-head {
+    width: 28px;
+    height: 16px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 14px 14px 0 0;
+  }
+
+  .soap-pump-neck {
+    width: 6px;
+    height: 28px;
+    background: rgba(255,255,255,0.85);
+  }
+
+  .soap-pump-collar {
+    width: 48px;
+    height: 10px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 4px;
+  }
+
+  .soap-body {
+    width: 96px;
+    height: 140px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 16px 16px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 12px;
+    box-shadow: 0 8px 32px rgba(45,58,49,0.15);
+  }
+
+  .soap-label-leaf {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+  }
+
+  .soap-label-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 9px;
+    font-weight: 700;
+    color: #2D3A31;
+    letter-spacing: 0.1em;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .soap-label-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 6px;
+    color: #8C9A84;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    text-align: center;
+  }
+
+  .hero-float-card {
+    position: absolute;
+    bottom: -1rem;
+    left: -2rem;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 1rem 1.25rem;
+    box-shadow: var(--shadow-xl);
+    min-width: 175px;
+    border: 1px solid var(--border);
+  }
+
+  .hero-float-card .stars {
+    color: #C27B66;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero-float-card .review-text {
+    font-size: 0.72rem;
+    color: var(--fg);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.4;
+  }
+
+  .hero-float-card .reviewer {
+    font-size: 0.67rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+    font-weight: 600;
+  }
+
+  /* ─── STATS STRIP ─── */
+  .stats {
+    background: var(--fg);
+    padding: 2.5rem 2rem;
+  }
+
+  .stats-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--secondary);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(220,207,194,0.6);
+    font-weight: 500;
+  }
+
+  /* ─── SECTION UTILS ─── */
+  section { padding: 7rem 2rem; }
+
+  .section-inner { max-width: 1280px; margin: 0 auto; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--fg);
+    margin-bottom: 1.2rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--terracotta); }
+
+  .section-sub {
+    font-size: 1.05rem;
+    color: #5a6b5e;
+    max-width: 540px;
+    line-height: 1.75;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ─── FEATURED PRODUCT (HERO SOAP) ─── */
+  .featured { background: var(--cream); }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .featured-visual {
+    position: relative;
+  }
+
+  .featured-img-main {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #b8cbb0 0%, #7fa070 50%, #5c8560 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .product-star-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--terracotta);
+    color: white;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.4rem 0.9rem;
+    border-radius: 9999px;
+  }
+
+  .big-soap {
+    position: relative;
+    width: 150px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .big-soap-pump-head {
+    width: 38px; height: 22px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px 20px 0 0;
+  }
+
+  .big-soap-pump-neck {
+    width: 8px; height: 36px;
+    background: rgba(255,255,255,0.9);
+  }
+
+  .big-soap-collar {
+    width: 62px; height: 14px;
+    background: rgba(255,255,255,0.88);
+    border-radius: 6px;
+  }
+
+  .big-soap-body {
+    width: 120px; height: 180px;
+    background: rgba(255,255,255,0.93);
+    border-radius: 20px 20px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 14px;
+    box-shadow: 0 12px 40px rgba(45,58,49,0.18);
+  }
+
+  .big-soap-label-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2D3A31;
+    text-align: center;
+    line-height: 1.4;
+    margin-top: 8px;
+  }
+
+  .big-soap-label-sub {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 7px;
+    color: #8C9A84;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 5px;
+    text-align: center;
+  }
+
+  .ingredient-bubble {
+    position: absolute;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 0.7rem 1rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--fg);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .ingredient-bubble .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+  }
+
+  .bubble-1 { top: 15%; left: -2rem; }
+  .bubble-2 { top: 45%; right: -2.5rem; }
+  .bubble-3 { bottom: 18%; left: -1.5rem; }
+
+  .featured-info .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .price-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .price-size {
+    font-size: 0.82rem;
+    color: var(--primary);
+    font-weight: 500;
+  }
+
+  .benefit-list {
+    list-style: none;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .benefit-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: #4a5e50;
+  }
+
+  .benefit-list li::before {
+    content: '';
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(140,154,132,0.15);
+    border: 1px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238C9A84' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px;
+  }
+
+  /* ─── PRODUCTS GRID ─── */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .product-card {
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    cursor: pointer;
+  }
+
+  .product-card:nth-child(even) {
+    transform: translateY(3rem);
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .product-card-img {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+  }
+
+  .product-card:hover .product-card-img img,
+  .product-card:hover .product-card-img .card-visual {
+    transform: scale(1.05);
+  }
+
+  .card-visual {
+    transition: transform 0.7s ease;
+    width: 70%;
+    height: 70%;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bg-sage { background: linear-gradient(135deg, #c4d4bc, #96ad8c); }
+  .bg-lavender { background: linear-gradient(135deg, #d0cce8, #a89abf); }
+  .bg-clay { background: linear-gradient(135deg, #e8d0c0, #c4967c); }
+  .bg-moss { background: linear-gradient(135deg, #bccab0, #7a9470); }
+  .bg-rose { background: linear-gradient(135deg, #e8c4c4, #c47878); }
+  .bg-honey { background: linear-gradient(135deg, #e8d8a0, #c4a830); }
+
+  .card-product-icon {
+    font-size: 2rem;
+    opacity: 0.7;
+  }
+
+  .product-card-body {
+    padding: 1.2rem 1.4rem 1.5rem;
+  }
+
+  .product-card-cat {
+    font-size: 0.67rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .product-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
+  }
+
+  .product-card-desc {
+    font-size: 0.82rem;
+    color: #6b7c71;
+    margin-bottom: 1rem;
+    line-height: 1.55;
+  }
+
+  .product-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .product-add {
+    width: 36px; height: 36px;
+    background: var(--fg);
+    color: var(--bg);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .product-add:hover {
+    background: var(--terracotta);
+    transform: scale(1.1);
+  }
+
+  /* ─── INGREDIENTS ─── */
+  .ingredients { background: var(--fg); color: var(--bg); }
+
+  .ingredients .section-tag { color: var(--secondary); opacity: 0.7; }
+  .ingredients .section-title { color: var(--bg); }
+  .ingredients .section-sub { color: rgba(249,248,244,0.65); }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .ingredient-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 1.75rem 1.4rem;
+    transition: background 0.4s ease, transform 0.4s ease;
+    text-align: center;
+  }
+
+  .ingredient-card:hover {
+    background: rgba(255,255,255,0.12);
+    transform: translateY(-4px);
+  }
+
+  .ingredient-icon-wrap {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(140,154,132,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+  }
+
+  .ingredient-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 0.4rem;
+  }
+
+  .ingredient-desc {
+    font-size: 0.8rem;
+    color: rgba(249,248,244,0.55);
+    line-height: 1.55;
+  }
+
+  /* ─── PROCESS ─── */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 0.5rem;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 3rem;
+    left: 16.66%;
+    right: 16.66%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), var(--border), transparent);
+  }
+
+  .step-card {
+    text-align: center;
+    position: relative;
+  }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 0.6rem;
+  }
+
+  .step-desc {
+    font-size: 0.88rem;
+    color: #6b7c71;
+    line-height: 1.65;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials { background: var(--cream); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .testimonial-card:nth-child(2) { transform: translateY(1.5rem); }
+
+  .testimonial-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .testimonial-stars {
+    color: var(--terracotta);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  .testimonial-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--fg);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .author-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .av-1 { background: var(--primary); }
+  .av-2 { background: var(--terracotta); }
+  .av-3 { background: #7B8FA0; }
+
+  .author-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .author-handle {
+    font-size: 0.72rem;
+    color: var(--primary);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── CTA SECTION ─── */
+  .cta-section {
+    background: var(--fg);
+    text-align: center;
+    padding: 6rem 2rem;
+  }
+
+  .cta-section .section-tag { color: rgba(220,207,194,0.6); }
+  .cta-section .section-title { color: var(--bg); margin: 0 auto 1rem; max-width: 620px; }
+  .cta-section .section-sub { color: rgba(249,248,244,0.6); margin: 0 auto 2.5rem; }
+
+  .cta-section .btn-primary {
+    background: var(--terracotta);
+    color: var(--white);
+    font-size: 0.82rem;
+    padding: 1rem 2.5rem;
+  }
+
+  .cta-section .btn-primary:hover {
+    background: var(--secondary);
+    color: var(--fg);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+    padding: 3.5rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-logo span { font-style: italic; color: var(--primary); }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+    color: #6b7c71;
+    line-height: 1.65;
+    max-width: 260px;
+  }
+
+  .footer-col-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: 1.1rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: #6b7c71;
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  .footer-links a:hover { color: var(--terracotta); }
+
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #8a9b8f;
+  }
+
+  /* ─── LEAF SVG DECORATION ─── */
+  .leaf-svg {
+    position: absolute;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  /* ─── SCROLL ANIMATION ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; }
+    .hero-visual { order: -1; max-width: 320px; margin: 0 auto; }
+    .hero-img-wrap { max-width: 280px; }
+    .hero-float-card { left: -0.5rem; bottom: -2rem; }
+    .featured-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .products-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .product-card:nth-child(even) { transform: none; }
+    .ingredients-grid { grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr; gap: 2rem; }
+    .process-steps::before { display: none; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .testimonial-card:nth-child(2) { transform: none; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    nav .nav-links { display: none; }
+    .bubble-1, .bubble-2, .bubble-3 { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .products-grid { grid-template-columns: 1fr; }
+    section { padding: 4.5rem 1.25rem; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- GRAIN -->
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">ESSEN<span>tia</span></a>
+  <ul class="nav-links">
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#ingredientes">Ingredientes</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#resenas">Reseñas</a></li>
+    <li><a href="#productos" class="nav-cta">Comprar ahora</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section style="padding:0; position:relative; overflow:hidden;">
+  <div class="hero">
+    <div class="hero-text fade-in">
+      <div class="hero-badge">100% Natural · Vegano · Sin parabenos</div>
+      <h1 class="hero-title">
+        Skincare que<br><em>respira</em> con<br>tu piel
+      </h1>
+      <p class="hero-sub">
+        Formulado con extractos botánicos puros y aceites esenciales certificados. Porque tu piel merece lo mismo que la tierra: cuidado honesto y natural.
+      </p>
+      <div class="hero-actions">
+        <a href="#productos" class="btn-primary">Descubrir productos</a>
+        <a href="#proceso" class="btn-secondary">Nuestra filosofía</a>
+      </div>
+    </div>
+
+    <div class="hero-visual fade-in" style="transition-delay:0.2s;">
+      <div class="hero-img-wrap">
+        <div class="hero-img-decoration">
+          <!-- Leaf decoration SVG -->
+          <svg width="200" height="280" viewBox="0 0 200 280" style="position:absolute;opacity:0.18;">
+            <path d="M100 20 Q160 60 150 140 Q140 200 100 240 Q60 200 50 140 Q40 60 100 20Z" fill="white"/>
+            <path d="M100 20 L100 240" stroke="white" stroke-width="1" fill="none" opacity="0.5"/>
+            <path d="M100 80 Q130 100 145 130" stroke="white" stroke-width="0.7" fill="none" opacity="0.4"/>
+            <path d="M100 80 Q70 100 55 130" stroke="white" stroke-width="0.7" fill="none" opacity="0.4"/>
+            <path d="M100 120 Q128 138 138 165" stroke="white" stroke-width="0.7" fill="none" opacity="0.4"/>
+            <path d="M100 120 Q72 138 62 165" stroke="white" stroke-width="0.7" fill="none" opacity="0.4"/>
+          </svg>
+          <!-- Soap bottle illustration -->
+          <div class="soap-bottle">
+            <div class="soap-pump-head"></div>
+            <div class="soap-pump-neck"></div>
+            <div class="soap-pump-collar"></div>
+            <div class="soap-body">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin-bottom:6px;">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#8C9A84" opacity="0.3"/>
+                <path d="M12 6c-1.5 2-3 3.5-3 6a3 3 0 006 0c0-2.5-1.5-4-3-6z" fill="#2D3A31" opacity="0.6"/>
+              </svg>
+              <div class="soap-label-name">ESSENTIA<br>EXFOLIANTE</div>
+              <div class="soap-label-sub">Jabón Líquido</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-float-card">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">"Mi piel nunca se había sentido tan suave y viva."</div>
+        <div class="reviewer">— Sofía R., cliente verificada</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="fade-in">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">Ingredientes activos</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.1s;">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Satisfacción garantizada</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.2s;">
+      <div class="stat-num">0%</div>
+      <div class="stat-label">Químicos agresivos</div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.3s;">
+      <div class="stat-num">5k+</div>
+      <div class="stat-label">Pieles felices</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURED PRODUCT -->
+<section class="featured" id="estrella">
+  <div class="section-inner">
+    <div class="featured-grid">
+      <div class="featured-visual fade-in">
+        <div class="featured-img-main">
+          <div class="product-star-badge">⭐ Producto Estrella</div>
+          <!-- Big soap bottle -->
+          <div class="big-soap">
+            <div class="big-soap-pump-head"></div>
+            <div class="big-soap-pump-neck"></div>
+            <div class="big-soap-collar"></div>
+            <div class="big-soap-body">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2C8 6 5 9 5 13a7 7 0 0014 0c0-4-3-7-7-11z" fill="#2D3A31" opacity="0.55"/>
+                <path d="M12 7c-1.8 2.5-3 4.5-3 6a3 3 0 006 0c0-1.5-1.2-3.5-3-6z" fill="#8C9A84" opacity="0.7"/>
+              </svg>
+              <div class="big-soap-label-name">ESSENTIA<br>EXFOLIANTE<br>MINERAL</div>
+              <div class="big-soap-label-sub">20ml · Jabón Líquido</div>
+            </div>
+          </div>
+        </div>
+        <!-- Ingredient bubbles -->
+        <div class="ingredient-bubble bubble-1">
+          <span class="dot"></span> Arcilla Blanca
+        </div>
+        <div class="ingredient-bubble bubble-2">
+          <span class="dot" style="background:var(--terracotta)"></span> Aloe Vera
+        </div>
+        <div class="ingredient-bubble bubble-3">
+          <span class="dot" style="background:#7B8FA0"></span> Sales del Himalaya
+        </div>
+      </div>
+
+      <div class="featured-info fade-in" style="transition-delay:0.2s;">
+        <span class="section-tag">Producto Estrella</span>
+        <h2 class="section-title">Jabón Líquido<br><em>Exfoliante Mineral</em></h2>
+        <p class="section-sub" style="margin-bottom:1.5rem;">
+          Nuestra fórmula más querida. Combina arcilla blanca purificante, sales del Himalaya y gel de aloe vera para una exfoliación profunda que no agrede — solo renueva.
+        </p>
+
+        <div class="price-row">
+          <span class="price-big">$30 MXN</span>
+          <span class="price-size">/ 20ml</span>
+        </div>
+
+        <ul class="benefit-list">
+          <li>Elimina células muertas con suavidad</li>
+          <li>Purifica los poros en profundidad</li>
+          <li>Hidrata mientras limpia con gel de aloe vera</li>
+          <li>Apto para piel sensible y mixta</li>
+          <li>Sin sulfatos · Sin parabenos · Sin fragancia artificial</li>
+        </ul>
+
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="#" class="btn-primary">Agregar al carrito</a>
+          <a href="#ingredientes" class="btn-secondary">Ver ingredientes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS GRID -->
+<section id="productos">
+  <div class="section-inner">
+    <span class="section-tag fade-in">Colección Completa</span>
+    <h2 class="section-title fade-in">Rituales para<br><em>cada piel</em></h2>
+    <p class="section-sub fade-in">Desde la limpieza hasta la hidratación profunda, cada producto es una pequeña ceremonia.</p>
+
+    <div class="products-grid">
+
+      <!-- Card 1 -->
+      <div class="product-card fade-in">
+        <div class="product-card-img bg-sage" style="background: linear-gradient(135deg,#b8cbb0,#7fa070); padding:2rem;">
+          <div class="card-visual bg-sage" style="background:rgba(255,255,255,0.2); border-radius:50% 50% 50% 50%/60% 60% 40% 40%;">
+            <svg width="52" height="80" viewBox="0 0 52 80" fill="none">
+              <rect x="18" y="18" width="16" height="52" rx="8" fill="white" opacity="0.9"/>
+              <rect x="20" y="12" width="12" height="10" rx="4" fill="white" opacity="0.8"/>
+              <rect x="23" y="8" width="6" height="6" rx="3" fill="white" opacity="0.7"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-cat">Limpieza</div>
+          <div class="product-card-name">Jabón Líquido Exfoliante Mineral</div>
+          <div class="product-card-desc">Limpieza profunda con arcilla blanca y carbón activado. El favorito de nuestra comunidad.</div>
+          <div class="product-card-footer">
+            <span class="product-price">$50</span>
+            <button class="product-add" title="Agregar">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card fade-in" style="transition-delay:0.1s;">
+        <div class="product-card-img" style="background: linear-gradient(135deg,#e8d0c0,#c4967c); padding:2rem;">
+          <div class="card-visual" style="background:rgba(255,255,255,0.2); border-radius:50%;">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+              <circle cx="30" cy="30" r="22" fill="white" opacity="0.85"/>
+              <circle cx="30" cy="30" r="14" fill="white" opacity="0.5"/>
+              <path d="M30 18 Q36 24 36 30 Q36 38 30 42 Q24 38 24 30 Q24 24 30 18Z" fill="#C27B66" opacity="0.4"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-cat">Hidratación</div>
+          <div class="product-card-name">Crema Facial de Rosa Mosqueta</div>
+          <div class="product-card-desc">Regenera y nutre con aceite puro de rosa mosqueta chilena, vitamina E y manteca de karité.</div>
+          <div class="product-card-footer">
+            <span class="product-price">$50</span>
+            <button class="product-add" title="Agregar">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card fade-in" style="transition-delay:0.2s;">
+        <div class="product-card-img" style="background: linear-gradient(135deg,#d0cce8,#a89abf); padding:2rem;">
+          <div class="card-visual" style="background:rgba(255,255,255,0.2); border-radius:30% 70% 70% 30%/30% 30% 70% 70%;">
+            <svg width="50" height="70" viewBox="0 0 50 70" fill="none">
+              <ellipse cx="25" cy="40" rx="18" ry="25" fill="white" opacity="0.85"/>
+              <rect x="19" y="10" width="12" height="16" rx="4" fill="white" opacity="0.75"/>
+              <rect x="22" y="6" width="6" height="7" rx="3" fill="white" opacity="0.7"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-cat">Tónico</div>
+          <div class="product-card-name">Agua Micelar de Lavanda</div>
+          <div class="product-card-desc">Desmaquillante y equilibrante. Lavanda orgánica y agua termal para resetear tu piel al final del día.</div>
+          <div class="product-card-footer">
+            <span class="product-price">$40</span>
+            <button class="product-add" title="Agregar">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="product-card fade-in" style="transition-delay:0.1s;">
+        <div class="product-card-img" style="background: linear-gradient(135deg,#bccab0,#7a9470); padding:2rem;">
+          <div class="card-visual" style="background:rgba(255,255,255,0.2); border-radius:60% 40% 40% 60%/60% 60% 40% 40%;">
+            <svg width="55" height="55" viewBox="0 0 55 55" fill="none">
+              <rect x="10" y="10" width="35" height="35" rx="17" fill="white" opacity="0.85"/>
+              <path d="M27 16 Q33 22 33 27 Q33 35 27 39 Q21 35 21 27 Q21 22 27 16Z" fill="#5c8560" opacity="0.35"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-cat">Sérum</div>
+          <div class="product-card-name">Sérum Vitamina C Botánico</div>
+          <div class="product-card-desc">Iluminador intensivo con vitamina C estabilizada, extracto de camu camu y ácido ferúlico.</div>
+          <div class="product-card-footer">
+            <span class="product-price">$90</span>
+            <button class="product-add" title="Agregar">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="product-card fade-in" style="transition-delay:0.2s;">
+        <div class="product-card-img" style="background: linear-gradient(135deg,#e8d8a0,#c4a830); padding:2rem;">
+          <div class="card-visual" style="background:rgba(255,255,255,0.2); border-radius:50%;">
+            <svg width="58" height="58" viewBox="0 0 58 58" fill="none">
+              <ellipse cx="29" cy="29" rx="20" ry="20" fill="white" opacity="0.82"/>
+              <path d="M29 14 L32 24 L42 24 L34 31 L37 41 L29 35 L21 41 L24 31 L16 24 L26 24Z" fill="#c4a830" opacity="0.4"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-cat">Mascarilla</div>
+          <div class="product-card-name">Mascarilla Miel & Cúrcuma</div>
+          <div class="product-card-desc">Trata manchas e ilumina el tono con miel de abeja orgánica, cúrcuma y propóleo natural.</div>
+          <div class="product-card-footer">
+            <span class="product-price">$60</span>
+            <button class="product-add" title="Agregar">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="product-card fade-in" style="transition-delay:0.3s;">
+        <div class="product-card-img" style="background: linear-gradient(135deg,#e8c4c4,#c47878); padding:2rem;">
+          <div class="card-visual" style="background:rgba(255,255,255,0.2); border-radius:50% 50% 50% 50%/40% 40% 60% 60%;">
+            <svg width="48" height="68" viewBox="0 0 48 68" fill="none">
+              <rect x="8" y="20" width="32" height="40" rx="16" fill="white" opacity="0.85"/>
+              <rect x="16" y="10" width="16" height="14" rx="6" fill="white" opacity="0.75"/>
+              <path d="M24 24 Q30 32 30 40 Q30 50 24 54 Q18 50 18 40 Q18 32 24 24Z" fill="#c47878" opacity="0.3"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-cat">Contorno</div>
+          <div class="product-card-name">Aceite Facial de Argán & Romero</div>
+          <div class="product-card-desc">Tratamiento nutritivo nocturno. Argán marroquí prensado en frío y aceite esencial de romero.</div>
+          <div class="product-card-footer">
+            <span class="product-price">$50</span>
+            <button class="product-add" title="Agregar">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="ingredients" id="ingredientes">
+  <div class="section-inner">
+    <span class="section-tag fade-in">Lo que usamos</span>
+    <h2 class="section-title fade-in">Ingredientes que<br><em>puedes pronunciar</em></h2>
+    <p class="section-sub fade-in">Sin nombres raros, sin química agresiva. Solo lo que la naturaleza lleva siglos perfeccionando.</p>
+
+    <div class="ingredients-grid">
+      <div class="ingredient-card fade-in">
+        <div class="ingredient-icon-wrap">🌿</div>
+        <div class="ingredient-name">Arcilla Blanca</div>
+        <div class="ingredient-desc">Kaolin purísimo que absorbe impurezas sin resecar. La base de nuestro jabón estrella.</div>
+      </div>
+      <div class="ingredient-card fade-in" style="transition-delay:0.1s;">
+        <div class="ingredient-icon-wrap">🪨</div>
+        <div class="ingredient-name">Sal del Himalaya</div>
+        <div class="ingredient-desc">Atrae toxinas y partículas de contaminación como un imán, liberando los poros con gentileza.</div>
+      </div>
+      <div class="ingredient-card fade-in" style="transition-delay:0.2s;">
+        <div class="ingredient-icon-wrap">🌵</div>
+        <div class="ingredient-name">Aloe Vera</div>
+        <div class="ingredient-desc">Hidrata, calma y repara. Ideal para pieles sensibles o después de la exfoliación.</div>
+      </div>
+      <div class="ingredient-card fade-in" style="transition-delay:0.3s;">
+        <div class="ingredient-icon-wrap">🌼</div>
+        <div class="ingredient-name">Aceite de Jojoba</div>
+        <div class="ingredient-desc">Imita el sebo natural de tu piel. Equilibra la producción de grasa sin obstruir.</div>
+      </div>
+      <div class="ingredient-card fade-in" style="transition-delay:0.1s;">
+        <div class="ingredient-icon-wrap">🌹</div>
+        <div class="ingredient-name">Rosa Mosqueta</div>
+        <div class="ingredient-desc">Rica en omega-3 y vitamina A, regenera cicatrices y atenúa líneas finas visiblemente.</div>
+      </div>
+      <div class="ingredient-card fade-in" style="transition-delay:0.2s;">
+        <div class="ingredient-icon-wrap">💜</div>
+        <div class="ingredient-name">Lavanda Orgánica</div>
+        <div class="ingredient-desc">Antibacterial natural con aroma terapéutico que calma la mente mientras cuida la piel.</div>
+      </div>
+      <div class="ingredient-card fade-in" style="transition-delay:0.3s;">
+        <div class="ingredient-icon-wrap">🍯</div>
+        <div class="ingredient-name">Miel de Abeja Raw</div>
+        <div class="ingredient-desc">Humectante natural con propiedades antimicrobianas. Ilumina el tono con uso constante.</div>
+      </div>
+      <div class="ingredient-card fade-in" style="transition-delay:0.4s;">
+        <div class="ingredient-icon-wrap">🌿</div>
+        <div class="ingredient-name">Manteca de Karité</div>
+        <div class="ingredient-desc">Barrera lipídica que sella la hidratación. Suaviza y nutre hasta las pieles más secas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="proceso">
+  <div class="section-inner">
+    <span class="section-tag fade-in">Cómo lo hacemos</span>
+    <h2 class="section-title fade-in">Elaborado con<br><em>intención</em></h2>
+    <p class="section-sub fade-in">Cada frasco pasa por un proceso artesanal que respeta los ingredientes y el medio ambiente.</p>
+
+    <div class="process-steps">
+      <div class="step-card fade-in">
+        <div class="step-num">01</div>
+        <h3 class="step-title">Selección ESSENTIA</h3>
+        <p class="step-desc">Trabajamos con proveedores certificados de agricultura regenerativa. Cada ingrediente es trazable desde su origen hasta tu frasco.</p>
+      </div>
+      <div class="step-card fade-in" style="transition-delay:0.15s;">
+        <div class="step-num">02</div>
+        <h3 class="step-title">Formulación artesanal</h3>
+        <p class="step-desc">En pequeños lotes para garantizar frescura. Sin conservadores agresivos — la fórmula se equilibra naturalmente con antioxidantes vegetales.</p>
+      </div>
+      <div class="step-card fade-in" style="transition-delay:0.3s;">
+        <div class="step-num">03</div>
+        <h3 class="step-title">Tu ritual diario</h3>
+        <p class="step-desc">Embalaje 100% reciclable. Recargable para el siguiente pedido. Porque el cuidado de la piel no debería costarle al planeta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="resenas">
+  <div class="section-inner">
+    <span class="section-tag fade-in">Lo que dicen</span>
+    <h2 class="section-title fade-in">Pieles que ya<br><em>cambiaron</em></h2>
+    <p class="section-sub fade-in">No lo decimos nosotros, lo dice quien lo usa cada mañana.</p>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Llevaba años buscando un jabón exfoliante que no me dejara la piel tirante. Este es diferente — limpia de verdad pero también hidrata. No vuelvo a ningún otro."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar av-1">SR</div>
+          <div>
+            <div class="author-name">Sofía Ramírez</div>
+            <div class="author-handle">Piel mixta · Monterrey</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in" style="transition-delay:0.15s;">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Como dermatóloga, soy muy escéptica con productos 'naturales'. Pero la formulación de este jabón está muy bien pensada. Se los recomiendo a mis pacientes con piel sensible."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar av-2">DM</div>
+          <div>
+            <div class="author-name">Dra. Diana Méndez</div>
+            <div class="author-handle">Dermatóloga · CDMX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in" style="transition-delay:0.3s;">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Me encanta que puedo entender cada ingrediente. Cero tóxicos, huele increíble y mis poros se ven mucho más pequeños desde la primera semana. Compra obligada."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar av-3">AL</div>
+          <div>
+            <div class="author-name">Andrea López</div>
+            <div class="author-handle">Piel grasa · Guadalajara</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-inner">
+    <span class="section-tag">Únete a la comunidad</span>
+    <h2 class="section-title">Tu piel lo<br><em>notará mañana</em></h2>
+    <p class="section-sub">Más de 5,000 personas ya adoptaron su ritual botánico. Empieza con el jabón exfoliante que todos hablan.</p>
+    <a href="#estrella" class="btn-primary">Conocer el Jabón Estrella</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">ESSEN<span>tia</span></div>
+      <p class="footer-tagline">Skincare formulado con honestidad ESSENTIA. Ingredientes que cuidan tu piel y respetan el planeta.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Productos</div>
+      <ul class="footer-links">
+        <li><a href="#">Jabón Exfoliante</a></li>
+        <li><a href="#">Cremas faciales</a></li>
+        <li><a href="#">Sérums</a></li>
+        <li><a href="#">Mascarillas</a></li>
+        <li><a href="#">Aceites</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Marca</div>
+      <ul class="footer-links">
+        <li><a href="#">Nuestra historia</a></li>
+        <li><a href="#">Ingredientes</a></li>
+        <li><a href="#">Sostenibilidad</a></li>
+        <li><a href="#">Blog botánico</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <ul class="footer-links">
+        <li><a href="#">hola@essentia.mx</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 ESSENTIA Skincare · Hecho con ♡ en México</span>
+    <span>Proyecto escolar · Diseño y formulación de concepto</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.product-add').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const orig = this.textContent;
+      this.textContent = '✓';
+      this.style.background = 'var(--primary)';
+      setTimeout(() => {
+        this.textContent = orig;
+        this.style.background = '';
+      }, 1200);
+    });
+  });
+</script>
+</body>
+</html>
